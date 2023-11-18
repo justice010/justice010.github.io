@@ -31,11 +31,11 @@
     
     
     <entry>
-      <title>关于</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>Vuknhub打靶系列</title>
+      <link href="/articles/index.html"/>
+      <url>/articles/index.html</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<ul><li><a href="/articles/DC-1/">DC-1</a></li><li><a href="/articles/DC-2/">DC-2</a></li></ul>]]></content>
       
     </entry>
     
@@ -53,17 +53,6 @@
     
     
     <entry>
-      <title>Vuknhub打靶系列</title>
-      <link href="/articles/index.html"/>
-      <url>/articles/index.html</url>
-      
-        <content type="html"><![CDATA[<ul><li><a href="/articles/DC-1/">DC-1</a></li><li><a href="/articles/DC-2/">DC-2</a></li></ul>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>友链</title>
       <link href="/link/index.html"/>
       <url>/link/index.html</url>
@@ -75,9 +64,9 @@
     
     
     <entry>
-      <title>音乐</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>关于</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -89,6 +78,17 @@
       <title>电影</title>
       <link href="/movie/index.html"/>
       <url>/movie/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>音乐</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
