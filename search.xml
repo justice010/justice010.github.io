@@ -20,22 +20,11 @@
     
     
     <entry>
-      <title>Vulnhub打靶系列</title>
-      <link href="/articles/index.html"/>
-      <url>/articles/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
-        <content type="html"><![CDATA[<ul><li><a href="/articles/DC-1">DC-1靶场</a></li><li><a href="/articles/me-and-my-girlfriend">me-and-my-girlfriend靶场</a></li></ul>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>关于</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<ul><li><a href="/categories/PT_base">渗透测试基础</a></li><li><a href="/articles/">Vulnhub打靶系列</a></li><li><a href="/categories/demo">待定…</a></li><li><a href="/categories/demo1">待定…</a></li><li><a href="/categories/demo2">待定…</a></li><li><a href="/categories/demo3">待定…</a></li></ul>]]></content>
       
     </entry>
     
@@ -53,33 +42,22 @@
     
     
     <entry>
+      <title>Vulnhub打靶系列</title>
+      <link href="/articles/index.html"/>
+      <url>/articles/index.html</url>
+      
+        <content type="html"><![CDATA[<ul><li><a href="/articles/DC-1">DC-1靶场</a></li><li><a href="/articles/me-and-my-girlfriend">me-and-my-girlfriend靶场</a></li></ul>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Vulnhub打靶之me-and-my-girlfriend靶场</title>
       <link href="//articles/me-and-my-girlfriend.html"/>
       <url>//articles/me-and-my-girlfriend.html</url>
       
         <content type="html"><![CDATA[<h2 id="1-主机扫描"><a href="#1-主机扫描" class="headerlink" title="1. 主机扫描"></a>1. 主机扫描</h2><p>扫描C段，发现主机。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_1.webp" alt=""></p><h2 id="2-端口扫描"><a href="#2-端口扫描" class="headerlink" title="2. 端口扫描"></a>2. 端口扫描</h2><p>扫描端口、服务、操作系统等，发现22和80端口开放。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_2.webp" alt=""></p><h2 id="3-访问网站"><a href="#3-访问网站" class="headerlink" title="3. 访问网站"></a>3. 访问网站</h2><p>浏览器访问80端口，发现只能本地访问。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_3.webp" alt=""><br>使用火狐浏览器插件 X-Forwarded-For Header，IP填127.0.0.1，”X-Forwarded-For”打上勾。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_4.webp" alt=""><br>成功访问到网站。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_5.webp" alt=""></p><h2 id="4-注册用户"><a href="#4-注册用户" class="headerlink" title="4. 注册用户"></a>4. 注册用户</h2><p>可以注册用户，注册一个用户之后成功登录，但是并没有找到flag。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_6.webp" alt=""><br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_7.webp" alt=""><br>发现URL有参数可变，发现水平越权漏洞，找到用户 Alice。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_8.webp" alt=""><br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_9.webp" alt=""><br>user_id=5时，是alice<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_10.webp" alt=""></p><h2 id="5-漏洞利用"><a href="#5-漏洞利用" class="headerlink" title="5. 漏洞利用"></a>5. 漏洞利用</h2><p>通过审查元素获取 Alice 明文密码，value即是alice的密码。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_11.webp" alt=""><br>下面是第二种获取明文密码的方法：<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_12.webp" alt=""></p><h2 id="6-SSH登录"><a href="#6-SSH登录" class="headerlink" title="6. SSH登录"></a>6. SSH登录</h2><p>用 Alice 的密码尝试 SSH 登录，成功登录。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_13.webp" alt=""><br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_14.webp" alt=""><br>在主目录下发现无文件，使用 <code>ls -al</code> 命令发现隐藏文件夹 <code>.my_secret</code>，获取到 <code>flag1.txt</code>。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_15.webp" alt=""></p><h2 id="7-提权"><a href="#7-提权" class="headerlink" title="7. 提权"></a>7. 提权</h2><p>在<code>flag1.txt</code>中，获得下一个flag需要提权到 root。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_16.webp" alt=""></p><h2 id="8-查看sudo权限"><a href="#8-查看sudo权限" class="headerlink" title="8. 查看sudo权限"></a>8. 查看sudo权限</h2><p>使用 <code>sudo -l</code> 命令查看权限，发现 Alice 可以使用 root 权限执行 PHP 文件。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_17.webp" alt=""></p><h2 id="9-提权到root"><a href="#9-提权到root" class="headerlink" title="9. 提权到root"></a>9. 提权到root</h2><p>使用 root 权限调用 PHP 的 <code>system</code> 函数打开 shell，获取 root 权限。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_18.webp" alt=""></p><h2 id="10-获取最终flag"><a href="#10-获取最终flag" class="headerlink" title="10. 获取最终flag"></a>10. 获取最终flag</h2><p>成功获取最后一个 flag。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_19.webp" alt=""></p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[<ul><li><a href="/categories/PT_base">渗透测试基础</a></li><li><a href="/articles/">Vulnhub打靶系列</a></li><li><a href="/categories/demo">待定…</a></li><li><a href="/categories/demo1">待定…</a></li><li><a href="/categories/demo2">待定…</a></li><li><a href="/categories/demo3">待定…</a></li></ul>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>PT_base</title>
-      <link href="/categories/PT_base.html"/>
-      <url>/categories/PT_base.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
@@ -120,21 +98,21 @@
     
     <entry>
       <title></title>
-      <link href="/js/cursor.js"/>
-      <url>/js/cursor.js</url>
+      <link href="/css/universe.css"/>
+      <url>/css/universe.css</url>
       
-        <content type="html"><![CDATA[var CURSOR;Math.lerp = (a, b, n) => (1 - n) * a + n * b;const getStyle = (el, attr) => {    try {        return window.getComputedStyle            ? window.getComputedStyle(el)[attr]            : el.currentStyle[attr];    } catch (e) {}    return "";};class Cursor {    constructor() {        this.pos = {curr: null, prev: null};        this.pt = [];        this.create();        this.init();        this.render();    }    move(left, top) {        this.cursor.style["left"] = `${left}px`;        this.cursor.style["top"] = `${top}px`;    }    create() {        if (!this.cursor) {            this.cursor = document.createElement("div");            this.cursor.id = "cursor";            this.cursor.classList.add("hidden");            document.body.append(this.cursor);        }        var el = document.getElementsByTagName('*');        for (let i = 0; i < el.length; i++)            if (getStyle(el[i], "cursor") == "pointer")                this.pt.push(el[i].outerHTML);        document.body.appendChild((this.scr = document.createElement("style")));        // 这里改变鼠标指针的颜色 由svg生成        this.scr.innerHTML = `* {cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' width='8px' height='8px'><circle cx='4' cy='4' r='4' opacity='.5'/></svg>") 4 4, auto}`;    }    refresh() {        this.scr.remove();        this.cursor.classList.remove("hover");        this.cursor.classList.remove("active");        this.pos = {curr: null, prev: null};        this.pt = [];        this.create();        this.init();        this.render();    }    init() {        document.onmouseover  = e => this.pt.includes(e.target.outerHTML) && this.cursor.classList.add("hover");        document.onmouseout   = e => this.pt.includes(e.target.outerHTML) && this.cursor.classList.remove("hover");        document.onmousemove  = e => {(this.pos.curr == null) && this.move(e.clientX - 8, e.clientY - 8); this.pos.curr = {x: e.clientX - 8, y: e.clientY - 8}; this.cursor.classList.remove("hidden");};        document.onmouseenter = e => this.cursor.classList.remove("hidden");        document.onmouseleave = e => this.cursor.classList.add("hidden");        document.onmousedown  = e => this.cursor.classList.add("active");        document.onmouseup    = e => this.cursor.classList.remove("active");    }    render() {        if (this.pos.prev) {            this.pos.prev.x = Math.lerp(this.pos.prev.x, this.pos.curr.x, 0.15);            this.pos.prev.y = Math.lerp(this.pos.prev.y, this.pos.curr.y, 0.15);            this.move(this.pos.prev.x, this.pos.prev.y);        } else {            this.pos.prev = this.pos.curr;        }        requestAnimationFrame(() => this.render());    }}(() => {    CURSOR = new Cursor();    // 需要重新获取列表时，使用 CURSOR.refresh()})();]]></content>
+        <content type="html"><![CDATA[/* 背景宇宙星光  */#universe{    display: block;    position: fixed;    margin: 0;    padding: 0;    border: 0;    outline: 0;    left: 0;    top: 0;    width: 100%;    height: 100%;    pointer-events: none;    /* 这个是调置顶的优先级的，-1在文章页下面，背景上面，个人推荐这种 */    z-index: -1;  }]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title></title>
-      <link href="/css/universe.css"/>
-      <url>/css/universe.css</url>
+      <title>友链</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
-        <content type="html"><![CDATA[/* 背景宇宙星光  */#universe{    display: block;    position: fixed;    margin: 0;    padding: 0;    border: 0;    outline: 0;    left: 0;    top: 0;    width: 100%;    height: 100%;    pointer-events: none;    /* 这个是调置顶的优先级的，-1在文章页下面，背景上面，个人推荐这种 */    z-index: -1;  }]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
@@ -146,6 +124,17 @@
       <url>/js/cat.js</url>
       
         <content type="html"><![CDATA[if (document.body.clientWidth > 992) {    function getBasicInfo() {        /* 窗口高度 */        var ViewH = $(window).height();        /* document高度 */        var DocH = $("body")[0].scrollHeight;        /* 滚动的高度 */        var ScrollTop = $(window).scrollTop();        /* 可滚动的高度 */        var S_V = DocH - ViewH;        var Band_H = ScrollTop / (DocH - ViewH) * 100;        return {            ViewH: ViewH,            DocH: DocH,            ScrollTop: ScrollTop,            Band_H: Band_H,            S_V: S_V        }    };    function show(basicInfo) {        if (basicInfo.ScrollTop > 0.001) {            $(".neko").css('display', 'block');        } else {            $(".neko").css('display', 'none');        }    }    (function ($) {        $.fn.nekoScroll = function (option) {            var defaultSetting = {                top: '0',                scroWidth: 6 + 'px',                z_index: 9999,                zoom: 0.9,                borderRadius: 5 + 'px',                right: 60 + 'px',                // 这里可以换为你喜欢的图片，例如我就换为了雪人，但是要抠图                nekoImg: "https://bu.dusays.com/2022/07/20/62d812db74be9.png",                hoverMsg: "喵喵喵~",                color: "#6f42c1",                during: 500,                blog_body: "body",            };            var setting = $.extend(defaultSetting, option);            var getThis = this.prop("className") !== "" ? "." + this.prop("className") : this.prop("id") !== "" ? "#" +                this.prop("id") : this.prop("nodeName");            if ($(".neko").length == 0) {                this.after("<div class=\"neko\" id=" + setting.nekoname + " data-msg=\"" + setting.hoverMsg + "\"></div>");            }            let basicInfo = getBasicInfo();            $(getThis)                .css({                    'position': 'fixed',                    'width': setting.scroWidth,                    'top': setting.top,                    'height': basicInfo.Band_H * setting.zoom * basicInfo.ViewH * 0.01 + 'px',                    'z-index': setting.z_index,                    'background-color': setting.bgcolor,                    "border-radius": setting.borderRadius,                    'right': setting.right,                    'background-image': 'url(' + setting.scImg + ')',                    'background-image': '-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent)', 'border-radius': '2em',                    'background-size': 'contain'                });            $("#" + setting.nekoname)                .css({                    'position': 'fixed',                    'top': basicInfo.Band_H * setting.zoom * basicInfo.ViewH * 0.01 - 50 + 'px',                    'z-index': setting.z_index * 10,                    'right': setting.right,                    'background-image': 'url(' + setting.nekoImg + ')',                });            show(getBasicInfo());            $(window)                .scroll(function () {                    let basicInfo = getBasicInfo();                    show(basicInfo);                    $(getThis)                        .css({                            'position': 'fixed',                            'width': setting.scroWidth,                            'top': setting.top,                            'height': basicInfo.Band_H * setting.zoom * basicInfo.ViewH * 0.01 + 'px',                            'z-index': setting.z_index,                            'background-color': setting.bgcolor,                            "border-radius": setting.borderRadius,                            'right': setting.right,                            'background-image': 'url(' + setting.scImg + ')',                            'background-image': '-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent)', 'border-radius': '2em',                            'background-size': 'contain'                        });                    $("#" + setting.nekoname)                        .css({                            'position': 'fixed',                            'top': basicInfo.Band_H * setting.zoom * basicInfo.ViewH * 0.01 - 50 + 'px',                            'z-index': setting.z_index * 10,                            'right': setting.right,                            'background-image': 'url(' + setting.nekoImg + ')',                        });                    if (basicInfo.ScrollTop == basicInfo.S_V) {                        $("#" + setting.nekoname)                            .addClass("showMsg")                    } else {                        $("#" + setting.nekoname)                            .removeClass("showMsg");                        $("#" + setting.nekoname)                            .attr("data-msg", setting.hoverMsg);                    }                });            this.click(function (e) {                btf.scrollToDest(0, 500)            });            $("#" + setting.nekoname)                .click(function () {                    btf.scrollToDest(0, 500)                });            return this;        }    })(jQuery);    $(document).ready(function () {        //部分自定义        $("#myscoll").nekoScroll({            bgcolor: 'rgb(0 0 0 / .5)', //背景颜色，没有绳子背景图片时有效            borderRadius: '2em',            zoom: 0.9        }        );        //自定义（去掉以下注释，并注释掉其他的查看效果）        /*        $("#myscoll").nekoScroll({            nekoname:'neko1', //nekoname，相当于id            nekoImg:'img/猫咪.png', //neko的背景图片            scImg:"img/绳1.png", //绳子的背景图片            bgcolor:'#1e90ff', //背景颜色，没有绳子背景图片时有效            zoom:0.9, //绳子长度的缩放值            hoverMsg:'你好~喵', //鼠标浮动到neko上方的对话框信息            right:'100px', //距离页面右边的距离            fontFamily:'楷体', //对话框字体            fontSize:'14px', //对话框字体的大小            color:'#1e90ff', //对话框字体颜色            scroWidth:'8px', //绳子的宽度            z_index:100, //不用解释了吧            during:1200, //从顶部到底部滑动的时长        });        */    })}]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/js/cursor.js"/>
+      <url>/js/cursor.js</url>
+      
+        <content type="html"><![CDATA[var CURSOR;Math.lerp = (a, b, n) => (1 - n) * a + n * b;const getStyle = (el, attr) => {    try {        return window.getComputedStyle            ? window.getComputedStyle(el)[attr]            : el.currentStyle[attr];    } catch (e) {}    return "";};class Cursor {    constructor() {        this.pos = {curr: null, prev: null};        this.pt = [];        this.create();        this.init();        this.render();    }    move(left, top) {        this.cursor.style["left"] = `${left}px`;        this.cursor.style["top"] = `${top}px`;    }    create() {        if (!this.cursor) {            this.cursor = document.createElement("div");            this.cursor.id = "cursor";            this.cursor.classList.add("hidden");            document.body.append(this.cursor);        }        var el = document.getElementsByTagName('*');        for (let i = 0; i < el.length; i++)            if (getStyle(el[i], "cursor") == "pointer")                this.pt.push(el[i].outerHTML);        document.body.appendChild((this.scr = document.createElement("style")));        // 这里改变鼠标指针的颜色 由svg生成        this.scr.innerHTML = `* {cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' width='8px' height='8px'><circle cx='4' cy='4' r='4' opacity='.5'/></svg>") 4 4, auto}`;    }    refresh() {        this.scr.remove();        this.cursor.classList.remove("hover");        this.cursor.classList.remove("active");        this.pos = {curr: null, prev: null};        this.pt = [];        this.create();        this.init();        this.render();    }    init() {        document.onmouseover  = e => this.pt.includes(e.target.outerHTML) && this.cursor.classList.add("hover");        document.onmouseout   = e => this.pt.includes(e.target.outerHTML) && this.cursor.classList.remove("hover");        document.onmousemove  = e => {(this.pos.curr == null) && this.move(e.clientX - 8, e.clientY - 8); this.pos.curr = {x: e.clientX - 8, y: e.clientY - 8}; this.cursor.classList.remove("hidden");};        document.onmouseenter = e => this.cursor.classList.remove("hidden");        document.onmouseleave = e => this.cursor.classList.add("hidden");        document.onmousedown  = e => this.cursor.classList.add("active");        document.onmouseup    = e => this.cursor.classList.remove("active");    }    render() {        if (this.pos.prev) {            this.pos.prev.x = Math.lerp(this.pos.prev.x, this.pos.curr.x, 0.15);            this.pos.prev.y = Math.lerp(this.pos.prev.y, this.pos.curr.y, 0.15);            this.move(this.pos.prev.x, this.pos.prev.y);        } else {            this.pos.prev = this.pos.curr;        }        requestAnimationFrame(() => this.render());    }}(() => {    CURSOR = new Cursor();    // 需要重新获取列表时，使用 CURSOR.refresh()})();]]></content>
       
     </entry>
     
@@ -174,9 +163,9 @@
     
     
     <entry>
-      <title>友链</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title>音乐</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -185,9 +174,20 @@
     
     
     <entry>
-      <title>音乐</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>关于</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>PT_base</title>
+      <link href="/categories/PT_base.html"/>
+      <url>/categories/PT_base.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
