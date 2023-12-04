@@ -20,11 +20,33 @@
     
     
     <entry>
+      <title>关于</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Vulnhub打靶系列</title>
       <link href="/articles/index.html"/>
       <url>/articles/index.html</url>
       
         <content type="html"><![CDATA[<ul><li><a href="/articles/DC-1">DC-1靶场</a></li><li><a href="/articles/me-and-my-girlfriend">me-and-my-girlfriend靶场</a></li><li><a href="/articles/narak">narak靶场</a></li></ul>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Vulnhub打靶之me-and-my-girlfriend靶场</title>
+      <link href="//articles/me-and-my-girlfriend.html"/>
+      <url>//articles/me-and-my-girlfriend.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-主机扫描"><a href="#1-主机扫描" class="headerlink" title="1. 主机扫描"></a>1. 主机扫描</h2><p>扫描C段，发现主机。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_1.webp" alt=""></p><h2 id="2-端口扫描"><a href="#2-端口扫描" class="headerlink" title="2. 端口扫描"></a>2. 端口扫描</h2><p>扫描端口、服务、操作系统等，发现22和80端口开放。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_2.webp" alt=""></p><h2 id="3-访问网站"><a href="#3-访问网站" class="headerlink" title="3. 访问网站"></a>3. 访问网站</h2><p>浏览器访问80端口，发现只能本地访问。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_3.webp" alt=""><br>使用火狐浏览器插件 X-Forwarded-For Header，IP填127.0.0.1，”X-Forwarded-For”打上勾。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_4.webp" alt=""><br>成功访问到网站。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_5.webp" alt=""></p><h2 id="4-注册用户"><a href="#4-注册用户" class="headerlink" title="4. 注册用户"></a>4. 注册用户</h2><p>可以注册用户，注册一个用户之后成功登录，但是并没有找到flag。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_6.webp" alt=""><br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_7.webp" alt=""><br>发现URL有参数可变，发现水平越权漏洞，找到用户 Alice。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_8.webp" alt=""><br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_9.webp" alt=""><br>user_id=5时，是alice<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_10.webp" alt=""></p><h2 id="5-漏洞利用"><a href="#5-漏洞利用" class="headerlink" title="5. 漏洞利用"></a>5. 漏洞利用</h2><p>通过审查元素获取 Alice 明文密码，value即是alice的密码。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_11.webp" alt=""><br>下面是第二种获取明文密码的方法：<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_12.webp" alt=""></p><h2 id="6-SSH登录"><a href="#6-SSH登录" class="headerlink" title="6. SSH登录"></a>6. SSH登录</h2><p>用 Alice 的密码尝试 SSH 登录，成功登录。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_13.webp" alt=""><br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_14.webp" alt=""><br>在主目录下发现无文件，使用 <code>ls -al</code> 命令发现隐藏文件夹 <code>.my_secret</code>，获取到 <code>flag1.txt</code>。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_15.webp" alt=""></p><h2 id="7-提权"><a href="#7-提权" class="headerlink" title="7. 提权"></a>7. 提权</h2><p>在<code>flag1.txt</code>中，获得下一个flag需要提权到 root。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_16.webp" alt=""></p><h2 id="8-查看sudo权限"><a href="#8-查看sudo权限" class="headerlink" title="8. 查看sudo权限"></a>8. 查看sudo权限</h2><p>使用 <code>sudo -l</code> 命令查看权限，发现 Alice 可以使用 root 权限执行 PHP 文件。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_17.webp" alt=""></p><h2 id="9-提权到root"><a href="#9-提权到root" class="headerlink" title="9. 提权到root"></a>9. 提权到root</h2><p>使用 root 权限调用 PHP 的 <code>system</code> 函数打开 shell，获取 root 权限。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_18.webp" alt=""></p><h2 id="10-获取最终flag"><a href="#10-获取最终flag" class="headerlink" title="10. 获取最终flag"></a>10. 获取最终flag</h2><p>成功获取最后一个 flag。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_19.webp" alt=""></p>]]></content>
       
     </entry>
     
@@ -53,22 +75,11 @@
     
     
     <entry>
-      <title>Vulnhub打靶之me-and-my-girlfriend靶场</title>
-      <link href="//articles/me-and-my-girlfriend.html"/>
-      <url>//articles/me-and-my-girlfriend.html</url>
+      <title></title>
+      <link href="/css/universe.css"/>
+      <url>/css/universe.css</url>
       
-        <content type="html"><![CDATA[<h2 id="1-主机扫描"><a href="#1-主机扫描" class="headerlink" title="1. 主机扫描"></a>1. 主机扫描</h2><p>扫描C段，发现主机。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_1.webp" alt=""></p><h2 id="2-端口扫描"><a href="#2-端口扫描" class="headerlink" title="2. 端口扫描"></a>2. 端口扫描</h2><p>扫描端口、服务、操作系统等，发现22和80端口开放。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_2.webp" alt=""></p><h2 id="3-访问网站"><a href="#3-访问网站" class="headerlink" title="3. 访问网站"></a>3. 访问网站</h2><p>浏览器访问80端口，发现只能本地访问。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_3.webp" alt=""><br>使用火狐浏览器插件 X-Forwarded-For Header，IP填127.0.0.1，”X-Forwarded-For”打上勾。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_4.webp" alt=""><br>成功访问到网站。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_5.webp" alt=""></p><h2 id="4-注册用户"><a href="#4-注册用户" class="headerlink" title="4. 注册用户"></a>4. 注册用户</h2><p>可以注册用户，注册一个用户之后成功登录，但是并没有找到flag。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_6.webp" alt=""><br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_7.webp" alt=""><br>发现URL有参数可变，发现水平越权漏洞，找到用户 Alice。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_8.webp" alt=""><br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_9.webp" alt=""><br>user_id=5时，是alice<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_10.webp" alt=""></p><h2 id="5-漏洞利用"><a href="#5-漏洞利用" class="headerlink" title="5. 漏洞利用"></a>5. 漏洞利用</h2><p>通过审查元素获取 Alice 明文密码，value即是alice的密码。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_11.webp" alt=""><br>下面是第二种获取明文密码的方法：<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_12.webp" alt=""></p><h2 id="6-SSH登录"><a href="#6-SSH登录" class="headerlink" title="6. SSH登录"></a>6. SSH登录</h2><p>用 Alice 的密码尝试 SSH 登录，成功登录。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_13.webp" alt=""><br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_14.webp" alt=""><br>在主目录下发现无文件，使用 <code>ls -al</code> 命令发现隐藏文件夹 <code>.my_secret</code>，获取到 <code>flag1.txt</code>。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_15.webp" alt=""></p><h2 id="7-提权"><a href="#7-提权" class="headerlink" title="7. 提权"></a>7. 提权</h2><p>在<code>flag1.txt</code>中，获得下一个flag需要提权到 root。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_16.webp" alt=""></p><h2 id="8-查看sudo权限"><a href="#8-查看sudo权限" class="headerlink" title="8. 查看sudo权限"></a>8. 查看sudo权限</h2><p>使用 <code>sudo -l</code> 命令查看权限，发现 Alice 可以使用 root 权限执行 PHP 文件。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_17.webp" alt=""></p><h2 id="9-提权到root"><a href="#9-提权到root" class="headerlink" title="9. 提权到root"></a>9. 提权到root</h2><p>使用 root 权限调用 PHP 的 <code>system</code> 函数打开 shell，获取 root 权限。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_18.webp" alt=""></p><h2 id="10-获取最终flag"><a href="#10-获取最终flag" class="headerlink" title="10. 获取最终flag"></a>10. 获取最终flag</h2><p>成功获取最后一个 flag。<br><img src="https://raw.githubusercontent.com/justice010/pic_bed/master/img/mamf_img/mamf_19.webp" alt=""></p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[<ul><li><a href="/categories/PT_base">渗透测试基础</a></li><li><a href="/articles/">Vulnhub打靶系列</a></li><li><a href="/categories/demo">待定…</a></li><li><a href="/categories/demo1">待定…</a></li><li><a href="/categories/demo2">待定…</a></li><li><a href="/categories/demo3">待定…</a></li></ul>]]></content>
+        <content type="html"><![CDATA[/* 背景宇宙星光  */#universe{    display: block;    position: fixed;    margin: 0;    padding: 0;    border: 0;    outline: 0;    left: 0;    top: 0;    width: 100%;    height: 100%;    pointer-events: none;    /* 这个是调置顶的优先级的，-1在文章页下面，背景上面，个人推荐这种 */    z-index: -1;  }]]></content>
       
     </entry>
     
@@ -80,17 +91,6 @@
       <url>/css/cat.css</url>
       
         <content type="html"><![CDATA[body::-webkit-scrollbar {    width: 0;}.neko {    width: 64px;    height: 64px;    background-image: url("https://bu.dusays.com/2022/07/20/62d812db74be9.png");    position: absolute;    right: 32px;    background-repeat: no-repeat;    background-size: contain;    transform: translateX(50%);    cursor: pointer;    font-family: tzy;    font-weight: 600;    font-size: 16px;    color: #6f42c1;    display: none;}.neko::after {    display: none;    width: 100px;    height: 100px;    background-image: url("https://bu.dusays.com/2022/07/20/62d812d95e6f5.png");    background-size: contain;    z-index: 9999;    position: absolute;    right: 50%;    text-align: center;    line-height: 100px;    top: -115%;}.neko.showMsg::after {    content: attr(data-msg);    display: block;    overflow: hidden;    text-overflow: ellipsis;}.neko:hover::after {    content: attr(data-msg);    display: block;    overflow: hidden;    text-overflow: ellipsis;}.neko.fontColor::after {    color: #333;}/** * @description: 滚动条样式  跟猫二选一 */@media screen and (max-width:992px) {    ::-webkit-scrollbar {        width: 8px !important;        height: 8px !important    }    ::-webkit-scrollbar-track {        border-radius: 2em;    }    ::-webkit-scrollbar-thumb {        background-color: rgb(255 255 255 / .3);        background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);        border-radius: 2em    }    ::-webkit-scrollbar-corner {        background-color: transparent    }}]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>PT_base</title>
-      <link href="/categories/PT_base.html"/>
-      <url>/categories/PT_base.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
@@ -109,10 +109,10 @@
     
     <entry>
       <title></title>
-      <link href="/css/progress_bar.css"/>
-      <url>/css/progress_bar.css</url>
+      <link href="/js/universe.js"/>
+      <url>/js/universe.js</url>
       
-        <content type="html"><![CDATA[.pace {    -webkit-pointer-events: none;    pointer-events: none;    -webkit-user-select: none;    -moz-user-select: none;    user-select: none;    z-index: 2000;    position: fixed;    margin: auto;    top: 4px;    left: 0;    right: 0;    height: 8px;    border-radius: 8px;    width: 7rem;    background: #eaecf2;    border: 1px #e3e8f7;    overflow: hidden}.pace-inactive .pace-progress {    opacity: 0;    transition: .3s ease-in}.pace .pace-progress {    -webkit-box-sizing: border-box;    -moz-box-sizing: border-box;    -ms-box-sizing: border-box;    -o-box-sizing: border-box;    box-sizing: border-box;    -webkit-transform: translate3d(0, 0, 0);    -moz-transform: translate3d(0, 0, 0);    -ms-transform: translate3d(0, 0, 0);    -o-transform: translate3d(0, 0, 0);    transform: translate3d(0, 0, 0);    max-width: 200px;    position: absolute;    z-index: 2000;    display: block;    top: 0;    right: 100%;    height: 100%;    width: 100%;    /* linear-gradient(to right, #3494e6, #ec6ead) */    background: linear-gradient(to right, #43cea2, #3866ca);    animation: gradient 2s ease infinite;    background-size: 200%}.pace.pace-inactive {    opacity: 0;    transition: .3s;    top: -8px}]]></content>
+        <content type="html"><![CDATA[function dark() {window.requestAnimationFrame=window.requestAnimationFrame||window.mozRequestAnimationFrame||window.webkitRequestAnimationFrame||window.msRequestAnimationFrame;var n,e,i,h,t=.05,s=document.getElementById("universe"),o=!0,a="180,184,240",r="226,225,142",d="226,225,224",c=[];function f(){n=window.innerWidth,e=window.innerHeight,i=.216*n,s.setAttribute("width",n),s.setAttribute("height",e)}function u(){h.clearRect(0,0,n,e);for(var t=c.length,i=0;i<t;i++){var s=c[i];s.move(),s.fadeIn(),s.fadeOut(),s.draw()}}function y(){this.reset=function(){this.giant=m(3),this.comet=!this.giant&&!o&&m(10),this.x=l(0,n-10),this.y=l(0,e),this.r=l(1.1,2.6),this.dx=l(t,6*t)+(this.comet+1-1)*t*l(50,120)+2*t,this.dy=-l(t,6*t)-(this.comet+1-1)*t*l(50,120),this.fadingOut=null,this.fadingIn=!0,this.opacity=0,this.opacityTresh=l(.2,1-.4*(this.comet+1-1)),this.do=l(5e-4,.002)+.001*(this.comet+1-1)},this.fadeIn=function(){this.fadingIn&&(this.fadingIn=!(this.opacity>this.opacityTresh),this.opacity+=this.do)},this.fadeOut=function(){this.fadingOut&&(this.fadingOut=!(this.opacity<0),this.opacity-=this.do/2,(this.x>n||this.y<0)&&(this.fadingOut=!1,this.reset()))},this.draw=function(){if(h.beginPath(),this.giant)h.fillStyle="rgba("+a+","+this.opacity+")",h.arc(this.x,this.y,2,0,2*Math.PI,!1);else if(this.comet){h.fillStyle="rgba("+d+","+this.opacity+")",h.arc(this.x,this.y,1.5,0,2*Math.PI,!1);for(var t=0;t<30;t++)h.fillStyle="rgba("+d+","+(this.opacity-this.opacity/20*t)+")",h.rect(this.x-this.dx/4*t,this.y-this.dy/4*t-2,2,2),h.fill()}else h.fillStyle="rgba("+r+","+this.opacity+")",h.rect(this.x,this.y,this.r,this.r);h.closePath(),h.fill()},this.move=function(){this.x+=this.dx,this.y+=this.dy,!1===this.fadingOut&&this.reset(),(this.x>n-n/4||this.y<0)&&(this.fadingOut=!0)},setTimeout(function(){o=!1},50)}function m(t){return Math.floor(1e3*Math.random())+1<10*t}function l(t,i){return Math.random()*(i-t)+t}f(),window.addEventListener("resize",f,!1),function(){h=s.getContext("2d");for(var t=0;t<i;t++)c[t]=new y,c[t].reset();u()}(),function t(){document.getElementsByTagName('html')[0].getAttribute('data-theme')=='dark'&&u(),window.requestAnimationFrame(t)}()};dark()]]></content>
       
     </entry>
     
@@ -120,10 +120,10 @@
     
     <entry>
       <title></title>
-      <link href="/css/universe.css"/>
-      <url>/css/universe.css</url>
+      <link href="/css/progress_bar.css"/>
+      <url>/css/progress_bar.css</url>
       
-        <content type="html"><![CDATA[/* 背景宇宙星光  */#universe{    display: block;    position: fixed;    margin: 0;    padding: 0;    border: 0;    outline: 0;    left: 0;    top: 0;    width: 100%;    height: 100%;    pointer-events: none;    /* 这个是调置顶的优先级的，-1在文章页下面，背景上面，个人推荐这种 */    z-index: -1;  }]]></content>
+        <content type="html"><![CDATA[.pace {    -webkit-pointer-events: none;    pointer-events: none;    -webkit-user-select: none;    -moz-user-select: none;    user-select: none;    z-index: 2000;    position: fixed;    margin: auto;    top: 4px;    left: 0;    right: 0;    height: 8px;    border-radius: 8px;    width: 7rem;    background: #eaecf2;    border: 1px #e3e8f7;    overflow: hidden}.pace-inactive .pace-progress {    opacity: 0;    transition: .3s ease-in}.pace .pace-progress {    -webkit-box-sizing: border-box;    -moz-box-sizing: border-box;    -ms-box-sizing: border-box;    -o-box-sizing: border-box;    box-sizing: border-box;    -webkit-transform: translate3d(0, 0, 0);    -moz-transform: translate3d(0, 0, 0);    -ms-transform: translate3d(0, 0, 0);    -o-transform: translate3d(0, 0, 0);    transform: translate3d(0, 0, 0);    max-width: 200px;    position: absolute;    z-index: 2000;    display: block;    top: 0;    right: 100%;    height: 100%;    width: 100%;    /* linear-gradient(to right, #3494e6, #ec6ead) */    background: linear-gradient(to right, #43cea2, #3866ca);    animation: gradient 2s ease infinite;    background-size: 200%}.pace.pace-inactive {    opacity: 0;    transition: .3s;    top: -8px}]]></content>
       
     </entry>
     
@@ -141,9 +141,9 @@
     
     
     <entry>
-      <title>关于</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -163,20 +163,9 @@
     
     
     <entry>
-      <title></title>
-      <link href="/js/universe.js"/>
-      <url>/js/universe.js</url>
-      
-        <content type="html"><![CDATA[function dark() {window.requestAnimationFrame=window.requestAnimationFrame||window.mozRequestAnimationFrame||window.webkitRequestAnimationFrame||window.msRequestAnimationFrame;var n,e,i,h,t=.05,s=document.getElementById("universe"),o=!0,a="180,184,240",r="226,225,142",d="226,225,224",c=[];function f(){n=window.innerWidth,e=window.innerHeight,i=.216*n,s.setAttribute("width",n),s.setAttribute("height",e)}function u(){h.clearRect(0,0,n,e);for(var t=c.length,i=0;i<t;i++){var s=c[i];s.move(),s.fadeIn(),s.fadeOut(),s.draw()}}function y(){this.reset=function(){this.giant=m(3),this.comet=!this.giant&&!o&&m(10),this.x=l(0,n-10),this.y=l(0,e),this.r=l(1.1,2.6),this.dx=l(t,6*t)+(this.comet+1-1)*t*l(50,120)+2*t,this.dy=-l(t,6*t)-(this.comet+1-1)*t*l(50,120),this.fadingOut=null,this.fadingIn=!0,this.opacity=0,this.opacityTresh=l(.2,1-.4*(this.comet+1-1)),this.do=l(5e-4,.002)+.001*(this.comet+1-1)},this.fadeIn=function(){this.fadingIn&&(this.fadingIn=!(this.opacity>this.opacityTresh),this.opacity+=this.do)},this.fadeOut=function(){this.fadingOut&&(this.fadingOut=!(this.opacity<0),this.opacity-=this.do/2,(this.x>n||this.y<0)&&(this.fadingOut=!1,this.reset()))},this.draw=function(){if(h.beginPath(),this.giant)h.fillStyle="rgba("+a+","+this.opacity+")",h.arc(this.x,this.y,2,0,2*Math.PI,!1);else if(this.comet){h.fillStyle="rgba("+d+","+this.opacity+")",h.arc(this.x,this.y,1.5,0,2*Math.PI,!1);for(var t=0;t<30;t++)h.fillStyle="rgba("+d+","+(this.opacity-this.opacity/20*t)+")",h.rect(this.x-this.dx/4*t,this.y-this.dy/4*t-2,2,2),h.fill()}else h.fillStyle="rgba("+r+","+this.opacity+")",h.rect(this.x,this.y,this.r,this.r);h.closePath(),h.fill()},this.move=function(){this.x+=this.dx,this.y+=this.dy,!1===this.fadingOut&&this.reset(),(this.x>n-n/4||this.y<0)&&(this.fadingOut=!0)},setTimeout(function(){o=!1},50)}function m(t){return Math.floor(1e3*Math.random())+1<10*t}function l(t,i){return Math.random()*(i-t)+t}f(),window.addEventListener("resize",f,!1),function(){h=s.getContext("2d");for(var t=0;t<i;t++)c[t]=new y,c[t].reset();u()}(),function t(){document.getElementsByTagName('html')[0].getAttribute('data-theme')=='dark'&&u(),window.requestAnimationFrame(t)}()};dark()]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>音乐</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>充电站</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -196,9 +185,9 @@
     
     
     <entry>
-      <title>友链</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title>音乐</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
